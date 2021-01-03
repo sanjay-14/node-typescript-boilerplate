@@ -63,15 +63,9 @@ steps:
     title: Deploy to QA
     image: ${{build_deploy_image}}
     working_directory: /app
-    environment:
-      - 'NODE_ENV=production'
-      - 'PORT=80'
     commands:
       - ls
     when:
-      branch:
-        only:
-          - master
       steps:
         - name: build_deploy_image
           on:
