@@ -16,7 +16,7 @@ RUN npm run build
 
 
 # Server container
-FROM heroku:latest as prod-env
+FROM node:10.15 as prod-env
 WORKDIR /app
 ENV NODE_ENV production \
     PORT 80

@@ -67,8 +67,7 @@ steps:
       - 'NODE_ENV=production'
       - 'PORT=80'
     commands:
-      - git --version
-      - heroku --version
+      - ls
     when:
       branch:
         only:
