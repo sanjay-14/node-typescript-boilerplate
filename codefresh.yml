@@ -67,7 +67,7 @@ steps:
       - 'NODE_ENV=production'
       - 'PORT=80'
     commands:
-      - node build/index.js
+      - ls
     when:
       branch:
         only:
