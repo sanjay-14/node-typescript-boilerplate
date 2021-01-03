@@ -25,7 +25,7 @@ steps:
     type: "build"
     image_name: "sanjay-14/node-typescript-boilerplate"
     working_directory: "${{clone}}"
-    tag: "${{CF_BRANCH_TAG_NORMALIZED}}"-TEST
+    tag: "${{CF_BRANCH_TAG_NORMALIZED}}-TEST"
     dockerfile: "Dockerfile"
     stage: "build"
     target: dev
@@ -41,7 +41,9 @@ steps:
         - name: build_test_image
           on:
             - success
-
+      branch:
+        only:
+          - master
   test:
     title: "Running test"
     type: "freestyle" # Run any command
@@ -56,7 +58,7 @@ steps:
           on:
             - success
   
-   deploy:
+  deploy:
     stage: deploy
     title: Deploy to QA
     image: ${{build_deploy_image}}
@@ -67,7 +69,13 @@ steps:
     commands:
       - node build/index.js
     when:
+      branch:
+        only:
+          - master
       steps:
         - name: build_deploy_image
           on:
-            - success          
+            - success   
+        - name: test
+          on:
+            - success            
