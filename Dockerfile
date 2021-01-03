@@ -16,7 +16,7 @@ RUN npm run build
 
 
 # Server container
-FROM node:10.15
+FROM node:10.15 as prod-env
 WORKDIR /app
 ENV NODE_ENV production \
     PORT 80
