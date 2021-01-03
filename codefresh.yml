@@ -7,6 +7,7 @@ stages:
   - "clone"
   - "build"
   - "test"
+  - "deploy"
 
 steps:
   clone:
@@ -49,5 +50,24 @@ steps:
     commands:
       - "npm run test"
     stage: "test"
-   
-    
+    when:
+      steps:
+        - name: build_test_image
+          on:
+            - success
+  
+   deploy:
+    stage: deploy
+    title: Deploy to QA
+    image: ${{build_deploy_image}}
+    working_directory: /app
+    environment:
+      - 'NODE_ENV=production'
+      - 'PORT=80'
+    commands:
+      - node build/index.js
+    when:
+      steps:
+        - name: build_deploy_image
+          on:
+            - success          

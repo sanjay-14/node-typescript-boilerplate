@@ -18,8 +18,8 @@ RUN npm run build
 # Server container
 FROM node:10.15 as prod-env
 WORKDIR /app
-ENV NODE_ENV production \
-    PORT 80
+# ENV NODE_ENV production \
+#     PORT 80
 
 # Installing production dependencies
 COPY --from=dev /app/package.json /app/package-lock.json ./
@@ -31,4 +31,4 @@ COPY --from=dev /app/build ./build
 # Application port
 EXPOSE ${PORT}
 
-CMD [ "node", "build/index.js" ]
+# CMD [ "node", "build/index.js" ]
