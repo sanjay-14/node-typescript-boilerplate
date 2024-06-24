@@ -14,21 +14,23 @@ COPY test ./test
 COPY src ./src
 RUN npm run build
 
-
 # Server container
-FROM node:10.15 as prod-env
+FROM dungeonmaster18/herokucli:latest as prod-env
 WORKDIR /app
 ENV NODE_ENV production \
     PORT 80
 
 # Installing production dependencies
-COPY --from=dev /app/package.json /app/package-lock.json ./
-RUN npm install
+# COPY --from=dev /app/package.json /app/package-lock.json ./
+# RUN npm install
 
 # Preparing built code to run
 COPY --from=dev /app/build ./build
-
-# Application port
+# RUN git --version
+RUN heroku --version
+RUN git --version
+RUN git push heroku
+# Application port  
 EXPOSE ${PORT}
 
 # CMD [ "node", "build/index.js" ]
